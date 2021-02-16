@@ -49,6 +49,15 @@ export class ProductService {
     await conn.query('delete from products where id = ? limit 1', [id]);
     return true;
   }
+
+  async update(id: string, entity: Product): Promise<Product> {
+    const conn = await this.mysql.getConnection();
+    await conn.query(
+      'update products set product = ?, price = ? where id = ?',
+      [entity.product, entity.price, id],
+    );
+    return entity;
+  }
 }
 
 //necessario criar uma camada extra para acessar o banco, não se deve acessar direto pelo service!

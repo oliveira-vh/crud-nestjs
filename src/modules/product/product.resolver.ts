@@ -3,14 +3,14 @@ import { Product } from './dto/product';
 import { ProductService } from './product.service';
 import { ProductInput } from './dto/product.input';
 
-@Resolver(of => Product)
+@Resolver((of) => Product)
 export class ProductResolver {
   constructor(private readonly productService: ProductService) {}
 
-  @Query(returns => [Product], { name: 'getAllProducts' })
+  @Query((returns) => [Product], { name: 'getAllProducts' })
   async getAllProducts(): Promise<Product[]> {
     const products = await this.productService.findAll();
-    const productsToReturn: Product[] = products.map(product => {
+    const productsToReturn: Product[] = products.map((product) => {
       const productToReturn = new Product();
       productToReturn.id = product.id;
       productToReturn.product = product.product;
@@ -20,7 +20,7 @@ export class ProductResolver {
     return productsToReturn;
   }
 
-  @Mutation(returns => Product, { name: 'createProduct' })
+  @Mutation((returns) => Product, { name: 'createProduct' })
   async create(@Args('input') input: ProductInput): Promise<Product> {
     return this.productService.create(input);
   }

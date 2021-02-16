@@ -1,6 +1,17 @@
-import { Body, Controller, Get, Post, Param, Delete } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Param,
+  Delete,
+  Put,
+} from '@nestjs/common';
 import { Product } from './product.entity';
 import { ProductService } from './product.service';
+
+//implementar:
+//put
 
 @Controller('products')
 export class ProductController {
@@ -23,5 +34,13 @@ export class ProductController {
   @Delete(':id')
   async remove(@Param('id') id: string): Promise<boolean> {
     return this.productService.remove(id);
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() product: Product,
+  ): Promise<Product> {
+    return this.productService.update(id, product);
   }
 }
